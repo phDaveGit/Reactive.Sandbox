@@ -12,7 +12,7 @@ namespace GH1859
 
         public MainViewModel()
         {
-            CrashCommand = ReactiveCommand.Create(() =>
+            CrashCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var someArray = new int[2];
                 var shouldBreak = someArray[3];
