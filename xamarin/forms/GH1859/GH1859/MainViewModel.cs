@@ -17,6 +17,11 @@ namespace GH1859
                 var someArray = new int[2];
                 var shouldBreak = someArray[3];
             });
+
+            CrashCommand.IsExecuting.Subscribe(_ =>
+            {
+                var foo = "bar";
+            });
         }
     }
 }
