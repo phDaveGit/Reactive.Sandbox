@@ -52,7 +52,9 @@ namespace ListViewExample
                     .DisposeWith(disposables);
 
 
-                this.WhenAnyValue(x => x.ViewModel.RefreshCommand).InvokeCommand(this, x => x.ViewModel.RefreshCommand).DisposeWith(disposables);
+                this.WhenAnyValue(x => x.ViewModel.RefreshCommand)
+                    .InvokeCommand(this, x => x.ViewModel.RefreshCommand)
+                    .DisposeWith(disposables);
             });
         }
     }
