@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using ReactiveUI;
 
 namespace ListViewExample
 {
@@ -20,17 +21,17 @@ namespace ListViewExample
 
     public class ApiClientService : IApiClientService
     {
+        private List<NamedDto> _items;
+
         public ApiClientService()
         {
-            Items = new List<NamedDto>();
+            _items = new List<NamedDto> { new NamedDto { Id = 1, Name = "1" } };
 
             Observable
                 .Interval(TimeSpan.FromSeconds(3))
-                .Subscribe(x => Items.Add(new NamedDto {Id = (int) x, Name = x.ToString()}));
+                .Subscribe(x => _items.Add(new NamedDto {Id = (int) x, Name = x.ToString()}));
         }
 
-        public List<NamedDto> Items { get; set; }
-
-        public Task<IEnumerable<NamedDto>> GetList() => Task.FromResult(Items.AsEnumerable());
+        public async Task<IEnumerable<NamedDto>> GetList() => await Task.FromResult(_items.AsEnumerable());
     }
 }

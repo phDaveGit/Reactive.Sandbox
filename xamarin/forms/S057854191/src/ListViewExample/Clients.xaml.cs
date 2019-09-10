@@ -34,27 +34,24 @@ namespace ListViewExample
                 ClientsList
                     .Events()
                     .ItemAppearing
-                    .Subscribe(e =>
-                    {
-                        var item = (ClientItemViewModel) e.Item;
-
-                        if (item.Id == ViewModel.Items.Select(i => i).Last().Id)
-                        {
-                            Observable.Return(Unit.Default).InvokeCommand(this, x => x.ViewModel.RefreshCommand);
-                        }
-                    })
+                    .Where(x => x != null && ((ClientItemViewModel)x.Item).Id == ViewModel.Items.Last().Id)
+                    .Select(x => Unit.Default)
+                    .ObserveOn(RxApp.MainThreadScheduler)
+                    .InvokeCommand(this, x => x.ViewModel.RefreshCommand)
                     .DisposeWith(disposables);
 
                 ClientsList
                     .Events()
                     .ItemTapped
-                    .Subscribe(e => { Observable.Return(e.Item).InvokeCommand(this,x => x.ViewModel.OpenCommand); })
+                    .Select(x => (ClientItemViewModel)x.Item)
+                    .InvokeCommand(this,x => x.ViewModel.OpenCommand)
                     .DisposeWith(disposables);
 
-
-                this.WhenAnyValue(x => x.ViewModel.RefreshCommand)
-                    .InvokeCommand(this, x => x.ViewModel.RefreshCommand)
-                    .DisposeWith(disposables);
+//                this.WhenAnyValue(x => x.ViewModel.RefreshCommand)
+//                    .Select(x => Unit.Default)
+//                    .ObserveOn(RxApp.MainThreadScheduler)
+//                    .InvokeCommand(this, x => x.ViewModel.RefreshCommand)
+//                    .DisposeWith(disposables);
             });
         }
     }

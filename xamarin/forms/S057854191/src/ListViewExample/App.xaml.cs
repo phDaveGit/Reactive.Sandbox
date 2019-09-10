@@ -9,8 +9,10 @@ namespace ListViewExample
         public App()
         {
             InitializeComponent();
+            
+            var bootstrapper = new AppBootstrapper();
 
-            MainPage = new MainPage();
+            MainPage = bootstrapper.CreateMainPage();
         }
 
         protected override void OnStart()

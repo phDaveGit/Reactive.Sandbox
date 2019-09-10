@@ -9,7 +9,7 @@
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <ListView x:Name="ClientsList" ></ListView>
+            <ListView x:Name="ClientsList" IsPullToRefreshEnabled="True" ></ListView>
         </StackLayout>
     </ContentPage.Content>
 </xamForms:ReactiveContentPage>

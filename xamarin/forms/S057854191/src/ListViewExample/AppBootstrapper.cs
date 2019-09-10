@@ -18,9 +18,9 @@ namespace ListViewExample
             Locator.CurrentMutable.RegisterConstant(this, typeof(IScreen));
             Locator.CurrentMutable.Register(() => new Clients(), typeof(IViewFor<ClientsViewModel>));
             Locator.CurrentMutable.Register(() => new Clients(), typeof(IViewFor<ClientsViewModel>));
+            Locator.CurrentMutable.RegisterLazySingleton<IApiClientService>(() => new ApiClientService());
 
-            this
-                .Router
+            Router
                 .NavigateAndReset
                 .Execute(new ClientsViewModel())
                 .Subscribe();

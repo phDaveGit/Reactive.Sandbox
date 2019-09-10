@@ -28,30 +28,32 @@ namespace ListViewExample
             _apiClientService = Locator.Current.GetService<IApiClientService>();
 
             _refreshCommand = ReactiveCommand.CreateFromTask(async () =>
-                (await _apiClientService.GetList())
-                    .Select(a => new ClientItemViewModel(this)
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-
-                    })
-            );
-
+                {
+                    var list = await _apiClientService.GetList();
+                    return list
+                        .Select(a => new ClientItemViewModel(this)
+                        {
+                            Id = a.Id,
+                            Name = a.Name
+                        });
+                });
 
             _refreshCommand.ThrownExceptions.Subscribe(ex => { });
 
             _isBusy = _refreshCommand
                 .IsExecuting
+                .DistinctUntilChanged()
                 .ToProperty(this, x => x.IsBusy);
 
             _openCommand = ReactiveCommand.CreateFromObservable<ClientItemViewModel, Unit>(a =>
-                HostScreen.Router.Navigate
+                HostScreen
+                    .Router
+                    .Navigate
                     .Execute(Locator.Current.GetService<ClientViewModel>().Init(a.Id))
                     .Select(_ => Unit.Default));
 
             _items = _refreshCommand
                 .ToProperty(this, x => x.Items, scheduler: RxApp.MainThreadScheduler);
-
 
             //this.WhenActivated(disposable =>
             //{
@@ -67,25 +69,5 @@ namespace ListViewExample
         public ReactiveCommand<ClientItemViewModel, Unit> OpenCommand => _openCommand;
 
         internal async Task CreateUser(ClientItemViewModel clientItemViewModel) => await Task.CompletedTask;
-    }
-
-    public class ClientViewModel : RoutableViewModelBase
-    {
-        public ClientViewModel Init(int id) => new ClientViewModel();
-    }
-
-    public class ClientItemViewModel : ViewModelBase
-    {
-        private readonly ReactiveCommand<Unit, Unit> _createUserCommand;
-        private string _name;
-
-        public ClientItemViewModel(ClientsViewModel view)
-        {
-            _createUserCommand = ReactiveCommand.CreateFromTask(async () => await view.CreateUser(this));
-        }
-
-        public int Id { get; set; }
-        public string Name { get => _name; set => this.RaiseAndSetIfChanged(ref _name, value); }
-        public ReactiveCommand<Unit,Unit> CreateUserCommand => _createUserCommand;
     }
 }
