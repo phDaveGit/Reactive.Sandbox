@@ -9,11 +9,12 @@ using UIKit;
 
 namespace ListView
 {
-    class ExampleTableView : ReactiveTableView<ExampleViewModel>
+    public class TableCell : ReactiveTableViewCell<TableCellViewModel>
     {
+        public static NSString ReuseKey = new NSString(nameof(TableCell));
     }
 
-    internal class ExampleViewModel
+    public class TableCellViewModel
     {
     }
 }

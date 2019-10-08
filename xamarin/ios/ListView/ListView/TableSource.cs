@@ -10,12 +10,12 @@ using UIKit;
 
 namespace ListView
 {
-    class ExampleTableViewSource : ReactiveTableViewSource<ExampleTableCellViewModel>
+    public class TableSource : ReactiveTableViewSource<TableCellViewModel>
     {
-        public ExampleTableViewSource(UITableView tableView,
+        public TableSource(UITableView tableView,
             INotifyCollectionChanged collection,
             NSString cellKey,
-            float sizeHint,
+            float sizeHint = 64,
             Action<UITableViewCell> initializeCellAction = null) : base(tableView,
             collection,
             cellKey,
@@ -24,13 +24,13 @@ namespace ListView
         {
         }
 
-        public ExampleTableViewSource(UITableView tableView,
-            IReadOnlyList<TableSectionInformation<ExampleTableCellViewModel>> sectionInformation)
+        public TableSource(UITableView tableView,
+            IReadOnlyList<TableSectionInformation<TableCellViewModel>> sectionInformation)
             : base(tableView, sectionInformation)
         {
         }
 
-        public ExampleTableViewSource(UITableView tableView) : base(tableView)
+        public TableSource(UITableView tableView) : base(tableView)
         {
         }
     }
