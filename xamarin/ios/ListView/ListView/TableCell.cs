@@ -14,7 +14,16 @@ namespace ListView
         public static NSString ReuseKey = new NSString(nameof(TableCell));
     }
 
-    public class TableCellViewModel
+    public class TableCellViewModel : ReactiveObject
     {
+        private ItemType _type;
+
+        public TableCellViewModel(Item item) { Type = item.Type; }
+
+        public ItemType Type
+        {
+            get => _type;
+            set => this.RaiseAndSetIfChanged(ref _type, value);
+        }
     }
 }
