@@ -1,4 +1,5 @@
 ﻿using System;
+using Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace gh2040
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new AppBootstrapper().CreateMainPage();
         }
 
         protected override void OnStart()
