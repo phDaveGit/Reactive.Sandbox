@@ -132,6 +132,8 @@ namespace ListView
                 .Cast<TableCellViewModel>()
                 .Subscribe(x => ViewModel.SelectedItem = x)
                 .DisposeWith(ControlBindings);
+
+            tableViewSource.Connect().DisposeWith(ControlBindings);
         }
 
     }
@@ -235,6 +237,8 @@ namespace ListView
         public Guid Id { get; set; } = Guid.NewGuid();
 
         public ItemType Type { get; set; } = ItemType.Some;
+
+        public bool IsToggled { get; set; }
     }
 
     public enum ItemType

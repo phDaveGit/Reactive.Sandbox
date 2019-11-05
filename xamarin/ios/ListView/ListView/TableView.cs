@@ -13,7 +13,7 @@ namespace ListView
     {
     }
 
-    public class TableViewModel
+    public class TableViewModel : ReactiveObject
     {
     }
 }
