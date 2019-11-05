@@ -59,12 +59,17 @@
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Item.cs" />
+    <Compile Include="ItemDataService.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="ListViewModel.cs" />
     <Compile Include="TableCell.cs" />
     <Compile Include="TableView.cs" />
     <Compile Include="TableSource.cs" />
     <Compile Include="ListController.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="UniversalView.cs" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Entitlements.plist" />
